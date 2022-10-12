@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input type="checkbox" :id="id" :checked="isDone" @change="$emit('checkbox-changed')">
-    <label :for="id">{{id}} :  {{label}}</label>
+    <input :id="toDoItem.id" :checked="isDone" type="checkbox" @change="$emit('checkbox-changed')">
+    <label :for="toDoItem.id">{{toDoItem.id}} :  {{toDoItem.label}}</label>
   </div>
 </template>
 
@@ -9,13 +9,14 @@
 
 export default {
   props : {
-    id : {required: true, type: String},
-    label: { required: true, type: String },
-    done : { default : false, type: Boolean }
+    toDoItem : {
+      type: Object,
+      required : true
+    }
   },
   data() {
     return {
-      isDone : this.done
+      isDone : this.toDoItem.done
     }
   },
   name: "ToDoItem"

@@ -4,8 +4,8 @@
   <to-do-form @todo-added="addToDo"></to-do-form>
   <h2>{{summary}}</h2>
   <ul>
-    <li v-for="item in ToDoItems" :key="item.id">
-      <to-do-item :id="item.id" :label="item.label" :done="item.done" @checkbox-changed="updatedDoneStatus(item.id)"></to-do-item>
+    <li v-for="item in toDoItems" :key="item.id">
+      <to-do-item :toDoItem="item" @checkbox-changed="updatedDoneStatus(item.id)"></to-do-item>
     </li>
   </ul>
 </template>
@@ -13,7 +13,6 @@
 <script>
 import ToDoItem from "@/components/ToDoItem";
 import ToDoForm from "@/components/ToDoForm";
-import uniqueId from "lodash.uniqueid";
 
 export default {
   name: 'App',
@@ -22,29 +21,30 @@ export default {
     ToDoForm,
   },
   methods: {
-    addToDo(label) {
-      this.ToDoItems.push({
-        id: uniqueId('todo-'), label: label, done: false
-      });
+    addToDo(newItem) {
+      this.toDoItems = this.toDoItems.concat(newItem);
     },
     updatedDoneStatus(toDoId) {
-      console.log(toDoId);
-      const toDoItemStatus = this.ToDoItems.find((item) => item.id === toDoId);
+      const toDoItemStatus = this.toDoItems.find((item) => item.id === toDoId);
 
       toDoItemStatus.done = !toDoItemStatus.done;
     }
   },
   data() {
     return {
-      ToDoItems: [
-      ]
+      toDoItem : {
+        id : '',
+        label : '',
+        done : '',
+      },
+      toDoItems: []
     };
   },
   computed: {
     summary() {
-      const countDoneStatus = this.ToDoItems.filter((item) => item.done).length
+      const countDoneStatus = this.toDoItems.filter((item) => item.done).length
 
-      return `${this.ToDoItems.length}개 중 ${countDoneStatus}개 완료!`;
+      return `${this.toDoItems.length}개 중 ${countDoneStatus}개 완료!`;
     }
   }
 }
