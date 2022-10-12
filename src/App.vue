@@ -27,9 +27,7 @@ export default {
     updatedDoneStatus(toDoId, index) {
       const toDoItemStatus = this.toDoItems.find((item) => item.id === toDoId);
 
-      const obj = {...toDoItemStatus, done: !toDoItemStatus.done};
-
-      this.toDoItems.splice(index, 1, obj);
+      this.toDoItems.splice(index, 1, {...toDoItemStatus, done: !toDoItemStatus.done});
     }
   },
   data() {
