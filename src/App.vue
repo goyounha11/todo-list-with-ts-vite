@@ -4,8 +4,8 @@
   <to-do-form @todo-added="addToDo"></to-do-form>
   <h2>{{summary}}</h2>
   <ul>
-    <li v-for="item in toDoItems" :key="item.id">
-      <to-do-item :toDoItem="item" @checkbox-changed="updatedDoneStatus(item.id)"></to-do-item>
+    <li v-for="(item, index) in toDoItems" :key="item.id">
+      <to-do-item :toDoItem="item" @checkbox-changed="updatedDoneStatus(item.id, index)"></to-do-item>
     </li>
   </ul>
 </template>
@@ -24,10 +24,12 @@ export default {
     addToDo(newItem) {
       this.toDoItems = [...this.toDoItems, newItem];
     },
-    updatedDoneStatus(toDoId) {
+    updatedDoneStatus(toDoId, index) {
       const toDoItemStatus = this.toDoItems.find((item) => item.id === toDoId);
 
-      toDoItemStatus.done = !toDoItemStatus.done;
+      const obj = {...toDoItemStatus, done: !toDoItemStatus.done};
+
+      this.toDoItems.splice(index, 1, obj);
     }
   },
   data() {
