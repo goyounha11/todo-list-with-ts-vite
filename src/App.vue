@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     addToDo(newItem) {
-      this.toDoItems = this.toDoItems.concat(newItem);
+      this.toDoItems = [...this.toDoItems, newItem];
     },
     updatedDoneStatus(toDoId) {
       const toDoItemStatus = this.toDoItems.find((item) => item.id === toDoId);
