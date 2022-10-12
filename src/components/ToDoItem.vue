@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input :id="toDoItem.id" :checked="isDone" type="checkbox" @change="$emit('checkbox-changed')">
+    <input :id="toDoItem.id" type="checkbox" @change="$emit('checkbox-changed')">
     <label :for="toDoItem.id">{{toDoItem.id}} :  {{toDoItem.label}}</label>
   </div>
 </template>
@@ -12,11 +12,6 @@ export default {
     toDoItem : {
       type: Object,
       required : true
-    }
-  },
-  data() {
-    return {
-      isDone : this.toDoItem.done
     }
   },
   name: "ToDoItem"
