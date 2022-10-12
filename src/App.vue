@@ -32,11 +32,6 @@ export default {
   },
   data() {
     return {
-      toDoItem : {
-        id : '',
-        label : '',
-        done : '',
-      },
       toDoItems: []
     };
   },
