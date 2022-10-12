@@ -13,7 +13,7 @@ import uniqueId from "lodash.uniqueid";
 export default {
   methods: {
     onSubmit() {
-      if(this.label === '') {
+      if(this.text === '') {
         return;
       }
 
