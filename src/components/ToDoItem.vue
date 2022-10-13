@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input :id="toDoItem.id" :checked="toDoItem.done" type="checkbox" @change="$emit('checkbox-changed')">
-    <label :for="toDoItem.id">{{toDoItem.id}} :  {{toDoItem.label}}</label>
+    <input :id="syncedModelValue.id" :checked="syncedModelValue.done" type="checkbox" @change="syncedModelValue.done = !syncedModelValue.done">
+    <label :for="syncedModelValue.id">{{syncedModelValue.id}} :  {{syncedModelValue.label}}</label>
   </div>
 </template>
 
@@ -9,9 +9,27 @@
 
 export default {
   props : {
-    toDoItem : {
+    modelValue : {
       type: Object,
       required : true
+    }
+  },
+  methods: {
+
+  },
+  data() {
+    return {
+      isEditing: false,
+    }
+  },
+  computed: {
+    syncedModelValue : {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value)
+      }
     }
   },
   name: "ToDoItem"
