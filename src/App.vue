@@ -24,8 +24,8 @@ export default {
     addToDo(newItem) {
       this.toDoItems = [...this.toDoItems, newItem];
     },
-    deleteToDo(index) {
-      this.toDoItems.splice(index, 1);
+    deleteToDo(id) {
+      this.toDoItems = this.toDoItems.filter((item, index) => index !== id);
     }
   },
   data() {
