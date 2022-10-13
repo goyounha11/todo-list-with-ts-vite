@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input :id="toDoItem.id" type="checkbox" @change="$emit('checkbox-changed')">
+    <input :id="toDoItem.id" :checked="toDoItem.done" type="checkbox" @change="$emit('checkbox-changed')">
     <label :for="toDoItem.id">{{toDoItem.id}} :  {{toDoItem.label}}</label>
   </div>
 </template>
