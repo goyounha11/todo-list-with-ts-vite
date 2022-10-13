@@ -5,7 +5,7 @@
   <h2>{{summary}}</h2>
   <ul>
     <li v-for="(item, index) in toDoItems" :key="item.id">
-      <to-do-item v-model="toDoItems[index]"></to-do-item>
+      <to-do-item v-model="toDoItems[index]" @item-deleted="deleteToDo(index)"></to-do-item>
     </li>
   </ul>
 </template>
@@ -23,6 +23,9 @@ export default {
   methods: {
     addToDo(newItem) {
       this.toDoItems = [...this.toDoItems, newItem];
+    },
+    deleteToDo(index) {
+      this.toDoItems.splice(index, 1);
     }
   },
   data() {
