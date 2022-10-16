@@ -3,7 +3,7 @@
     <input :id="syncedModelValue.id" :checked="syncedModelValue.done" type="checkbox" @change="syncedModelValue.done = !syncedModelValue.done">
     <label :for="syncedModelValue.id">{{syncedModelValue.id}} :  {{syncedModelValue.label}}</label>
     <br>
-    <button type="button" @click="toggleToDoEditForm">edit</button>
+    <button type="button" @click="editToDoItem">edit</button>
     <button type="button" @click="deleteToDoItem">delete</button>
   </div>
   <to-do-edit-form v-else :id="syncedModelValue.id" :label="syncedModelValue.label" @item-edited="itemEdited" @edit-cancelled="editCancelled"></to-do-edit-form>
@@ -22,7 +22,7 @@ export default {
     }
   },
   methods: {
-    toggleToDoEditForm() {
+    editToDoItem() {
       this.isEditing = true;
     },
     itemEdited(newLabel) {
