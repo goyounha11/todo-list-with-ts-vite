@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div>
-      <label>Edit Name for {{label}}</label><br>
+      <label :for="id">Edit Name for {{label}}</label><br>
       <input :id="id" v-model.lazy.trim="newLabel" autocomplete="off" type="text">
       <button type="submit">save</button>
       <button type="button" @click="onCancel">cancel</button>

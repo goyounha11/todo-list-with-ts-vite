@@ -8,7 +8,7 @@
 
 <script>
 
-import uniqueId from "lodash.uniqueid";
+import {uniqueId} from 'lodash-es';
 
 export default {
   methods: {
@@ -18,6 +18,7 @@ export default {
       }
 
       this.newTodo = {
+
         id : uniqueId('to-do'),
         label: this.text,
         done: false
