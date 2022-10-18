@@ -14,12 +14,8 @@
 import {defineComponent} from "vue";
 import ToDoItem from "@/components/ToDoItem.vue";
 import ToDoForm from "@/components/ToDoForm.vue";
+import {toDoItem} from "@/type";
 
-interface toDoItem {
-  id: string,
-  label: string,
-  done: boolean
-}
 
 export default defineComponent({
   name: 'App',

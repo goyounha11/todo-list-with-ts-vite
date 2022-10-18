@@ -10,15 +10,16 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, PropType} from "vue";
 import ToDoEditForm from "@/components/ToDoEditForm.vue";
+import {toDoItem} from "@/type";
 
 export default defineComponent({
   name: "ToDoItem",
   components: {ToDoEditForm},
   props : {
     modelValue : {
-      type: Object,
+      type: Object as PropType<toDoItem>,
       required : true
     }
   },
@@ -50,7 +51,7 @@ export default defineComponent({
       get() {
         return this.modelValue;
       },
-      set(value: object) {
+      set(value: toDoItem) {
         this.$emit("update:modelValue", value);
       }
     }
