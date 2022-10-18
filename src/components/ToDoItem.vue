@@ -9,33 +9,35 @@
   <to-do-edit-form v-else :id="syncedModelValue.id" :label="syncedModelValue.label" @item-edited="itemEdited" @edit-cancelled="editCancelled"></to-do-edit-form>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent, PropType} from "vue";
+import ToDoEditForm from "@/components/ToDoEditForm.vue";
+import {toDoItem} from "@/type";
 
-import ToDoEditForm from "@/components/ToDoEditForm";
-
-export default {
+export default defineComponent({
+  name: "ToDoItem",
   components: {ToDoEditForm},
   props : {
     modelValue : {
-      type: Object,
+      type: Object as PropType<toDoItem>,
       required : true
     }
   },
   methods: {
-    changeDone() {
+    changeDone(): void {
       this.syncedModelValue = {...this.syncedModelValue, done: !this.syncedModelValue.done};
     },
-    editToDoItem() {
+    editToDoItem(): void {
       this.isEditing = true;
     },
-    itemEdited(newLabel) {
+    itemEdited(newLabel: string): void {
       this.syncedModelValue = {...this.syncedModelValue, label: newLabel};
       this.isEditing = false;
     },
-    editCancelled() {
+    editCancelled(): void {
       this.isEditing = false;
     },
-    deleteToDoItem() {
+    deleteToDoItem(): void {
       this.$emit('item-deleted');
     },
   },
@@ -46,16 +48,15 @@ export default {
   },
   computed: {
     syncedModelValue: {
-      get() {
+      get(): toDoItem {
         return this.modelValue;
       },
-      set(value) {
+      set(value: toDoItem): void {
         this.$emit("update:modelValue", value);
       }
     }
-  },
-  name: "ToDoItem"
-}
+  }
+});
 </script>
 
 <style scoped>
