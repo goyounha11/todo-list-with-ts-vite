@@ -29,7 +29,7 @@ export default {
       this.isEditing = true;
     },
     itemEdited(newLabel) {
-      this.syncedModelValue.label = newLabel;
+      this.syncedModelValue = {...this.syncedModelValue, label: newLabel};
       this.isEditing = false;
     },
     editCancelled() {
@@ -50,7 +50,7 @@ export default {
         return this.modelValue;
       },
       set(value) {
-        this.$emit("update:modelValue", value)
+        this.$emit("update:modelValue", value);
       }
     }
   },
