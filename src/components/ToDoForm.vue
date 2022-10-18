@@ -17,25 +17,17 @@ export default {
         return;
       }
 
-      this.newTodo = {
-
+      this.$emit("todo-added", {
         id : uniqueId('to-do'),
         label: this.text,
         done: false
-      };
-
-      this.$emit("todo-added", this.newTodo);
+      });
 
       this.text = "";
     }
   },
   data() {
     return {
-      newTodo : {
-        id : '',
-        label : '',
-        done : ''
-      },
       text : ''
     };
   },
