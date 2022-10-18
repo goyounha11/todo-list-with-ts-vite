@@ -25,12 +25,12 @@ export default defineComponent({
     }
   },
   methods: {
-    onSubmit() {
+    onSubmit(): void {
       if(this.newLabel && this.newLabel !== this.label) {
         this.$emit("item-edited", this.newLabel);
       }
     },
-    onCancel() {
+    onCancel(): void {
       this.$emit("edit-cancelled");
     }
   },

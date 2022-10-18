@@ -13,8 +13,8 @@ import {uniqueId} from "lodash-es";
 export default defineComponent({
   name: "ToDoForm",
   methods: {
-    onSubmit() {
-      if(this.text === '') {
+    onSubmit(): void {
+      if(this.text === ''){
         return;
       }
 

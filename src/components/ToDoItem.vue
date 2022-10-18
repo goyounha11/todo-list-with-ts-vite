@@ -24,20 +24,20 @@ export default defineComponent({
     }
   },
   methods: {
-    changeDone() {
+    changeDone(): void {
       this.syncedModelValue = {...this.syncedModelValue, done: !this.syncedModelValue.done};
     },
-    editToDoItem() {
+    editToDoItem(): void {
       this.isEditing = true;
     },
-    itemEdited(newLabel: string) {
+    itemEdited(newLabel: string): void {
       this.syncedModelValue = {...this.syncedModelValue, label: newLabel};
       this.isEditing = false;
     },
-    editCancelled() {
+    editCancelled(): void {
       this.isEditing = false;
     },
-    deleteToDoItem() {
+    deleteToDoItem(): void {
       this.$emit('item-deleted');
     },
   },
@@ -48,10 +48,10 @@ export default defineComponent({
   },
   computed: {
     syncedModelValue: {
-      get() {
+      get(): toDoItem {
         return this.modelValue;
       },
-      set(value: toDoItem) {
+      set(value: toDoItem): void {
         this.$emit("update:modelValue", value);
       }
     }

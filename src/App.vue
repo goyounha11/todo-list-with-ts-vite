@@ -24,10 +24,10 @@ export default defineComponent({
     ToDoForm,
   },
   methods: {
-    addToDo(newItem: toDoItem) {
+    addToDo(newItem: toDoItem): void {
       this.toDoItems = [...this.toDoItems, newItem];
     },
-    deleteToDo(id: string) {
+    deleteToDo(id: string): void {
       this.toDoItems = this.toDoItems.filter((item: toDoItem) => item.id !== id);
     }
   },
