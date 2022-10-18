@@ -6,11 +6,12 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent} from "vue";
+import {uniqueId} from "lodash-es";
 
-import {uniqueId} from 'lodash-es';
-
-export default {
+export default defineComponent({
+  name: "ToDoForm",
   methods: {
     onSubmit() {
       if(this.text === '') {
@@ -30,9 +31,8 @@ export default {
     return {
       text : ''
     };
-  },
-  name: "ToDoForm"
-}
+  }
+});
 </script>
 
 <style scoped>

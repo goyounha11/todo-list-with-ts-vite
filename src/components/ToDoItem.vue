@@ -9,11 +9,12 @@
   <to-do-edit-form v-else :id="syncedModelValue.id" :label="syncedModelValue.label" @item-edited="itemEdited" @edit-cancelled="editCancelled"></to-do-edit-form>
 </template>
 
-<script>
+<script lang="ts">
+import {defineComponent} from "vue";
+import ToDoEditForm from "@/components/ToDoEditForm.vue";
 
-import ToDoEditForm from "@/components/ToDoEditForm";
-
-export default {
+export default defineComponent({
+  name: "ToDoItem",
   components: {ToDoEditForm},
   props : {
     modelValue : {
@@ -28,7 +29,7 @@ export default {
     editToDoItem() {
       this.isEditing = true;
     },
-    itemEdited(newLabel) {
+    itemEdited(newLabel: string) {
       this.syncedModelValue = {...this.syncedModelValue, label: newLabel};
       this.isEditing = false;
     },
@@ -49,13 +50,12 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(value) {
+      set(value: object) {
         this.$emit("update:modelValue", value);
       }
     }
-  },
-  name: "ToDoItem"
-}
+  }
+});
 </script>
 
 <style scoped>

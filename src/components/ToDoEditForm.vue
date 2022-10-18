@@ -9,8 +9,11 @@
   </form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from "vue";
+
+export default defineComponent({
+  name: "ToDoEditForm",
   props: {
     label: {
       type: String,
@@ -20,11 +23,6 @@ export default {
       type: String,
       required: true,
     }
-  },
-  data() {
-    return {
-      newLabel: this.label,
-    };
   },
   methods: {
     onSubmit() {
@@ -36,8 +34,12 @@ export default {
       this.$emit("edit-cancelled");
     }
   },
-  name: "ToDoEditForm"
-}
+  data() {
+    return {
+      newLabel: this.label,
+    };
+  }
+});
 </script>
 
 <style scoped>
