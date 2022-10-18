@@ -9,37 +9,28 @@
   </form>
 </template>
 
-<script lang="ts">
-import {defineComponent} from "vue";
+<script lang="ts" setup>
+import {defineEmits, defineProps, ref} from "vue";
 
-export default defineComponent({
-  name: "ToDoEditForm",
-  props: {
-    label: {
-      type: String,
-      required: true,
-    },
-    id: {
-      type: String,
-      required: true,
-    }
-  },
-  methods: {
-    onSubmit(): void {
-      if(this.newLabel && this.newLabel !== this.label) {
-        this.$emit("item-edited", this.newLabel);
-      }
-    },
-    onCancel(): void {
-      this.$emit("edit-cancelled");
-    }
-  },
-  data() {
-    return {
-      newLabel: this.label,
-    };
-  }
+const props = defineProps({
+  label: String,
+  id: String
 });
+
+const newLabel = ref<string>('')
+
+const emit = defineEmits([
+    'item-edited', 'edit-cancelled'
+]);
+
+const onSubmit = (): void => {
+  if(newLabel.value && newLabel.value !== props.label) {
+    emit('item-edited', newLabel.value);
+  }
+}
+const onCancel = (): void => {
+  emit('edit-cancelled')
+}
 </script>
 
 <style scoped>

@@ -6,33 +6,29 @@
   </form>
 </template>
 
-<script lang="ts">
-import {defineComponent} from "vue";
+<script lang="ts" setup>
+import {defineEmits, ref} from "vue";
 import {uniqueId} from "lodash-es";
 
-export default defineComponent({
-  name: "ToDoForm",
-  methods: {
-    onSubmit(): void {
-      if(this.text === ''){
-        return;
-      }
+const text = ref<string>('')
 
-      this.$emit("todo-added", {
-        id : uniqueId('to-do'),
-        label: this.text,
-        done: false
-      });
+const emit = defineEmits([
+  'todo-added'
+])
 
-      this.text = "";
-    }
-  },
-  data() {
-    return {
-      text : ''
-    };
+const onSubmit = (): void => {
+  if(text.value === ''){
+    return
   }
-});
+
+  emit('todo-added', {
+    id : uniqueId('to-do'),
+    label: text.value,
+    done: false
+  })
+
+  text.value = ''
+}
 </script>
 
 <style scoped>
