@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isEditing">
-    <input :id="syncedModelValue.id" :checked="syncedModelValue.done" type="checkbox" @change="syncedModelValue.done = !syncedModelValue.done">
+    <input :id="syncedModelValue.id" :checked="syncedModelValue.done" type="checkbox" @change="changeDone">
     <label :for="syncedModelValue.id">{{syncedModelValue.id}} :  {{syncedModelValue.label}}</label>
     <br>
     <button type="button" @click="editToDoItem">edit</button>
@@ -22,6 +22,9 @@ export default {
     }
   },
   methods: {
+    changeDone() {
+      this.syncedModelValue = {...this.syncedModelValue, done: !this.syncedModelValue.done};
+    },
     editToDoItem() {
       this.isEditing = true;
     },
