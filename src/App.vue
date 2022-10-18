@@ -10,37 +10,44 @@
   </ul>
 </template>
 
-<script>
-import ToDoItem from "@/components/ToDoItem";
-import ToDoForm from "@/components/ToDoForm";
+<script lang="ts">
+import {defineComponent} from "vue";
+import ToDoItem from "@/components/ToDoItem.vue";
+import ToDoForm from "@/components/ToDoForm.vue";
 
-export default {
+interface toDoItem {
+  id: string,
+  label: string,
+  done: boolean
+}
+
+export default defineComponent({
   name: 'App',
   components: {
     ToDoItem,
     ToDoForm,
   },
   methods: {
-    addToDo(newItem) {
+    addToDo(newItem: toDoItem) {
       this.toDoItems = [...this.toDoItems, newItem];
     },
-    deleteToDo(id) {
-      this.toDoItems = this.toDoItems.filter((item) => item.id !== id);
+    deleteToDo(id: string) {
+      this.toDoItems = this.toDoItems.filter((item: toDoItem) => item.id !== id);
     }
   },
   data() {
     return {
-      toDoItems: []
+      toDoItems: [] as Array<toDoItem>
     };
   },
   computed: {
-    summary() {
-      const countDoneStatus = this.toDoItems.filter((item) => item.done).length
+    summary(): string {
+      const countDoneStatus = this.toDoItems.filter((item:toDoItem) => item.done).length
 
       return `${this.toDoItems.length}개 중 ${countDoneStatus}개 완료!`;
     }
   }
-}
+});
 </script>
 
 <style>
