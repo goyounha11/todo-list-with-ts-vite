@@ -1,23 +1,8 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <h1>To-Do-List</h1>
-  <ToDoForm @todo-added="addToDo"></ToDoForm>
-  <h2>{{ summary }}</h2>
-  <ul>
-    <li v-for="(item, index) in toDoItems" :key="item.id">
-      <ToDoItem
-        v-model="toDoItems[index]"
-        @item-deleted="deleteToDo(item.id)"
-      ></ToDoItem>
-    </li>
-  </ul>
-</template>
-
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import ToDoItem from "@/components/ToDoItem.vue";
 import ToDoForm from "@/components/ToDoForm.vue";
-import { toDoItem } from "@/type";
+import type { toDoItem } from "@/type";
 
 const toDoItems = ref<Array<toDoItem>>([]);
 
@@ -36,6 +21,20 @@ const summary = computed((): string => {
   return `${toDoItems.value.length}개 중 ${countDoneStatus}개 완료!`;
 });
 </script>
+<template>
+  <img alt="Vue logo" src="./assets/logo.svg" width="150" />
+  <h1>To-Do-List</h1>
+  <ToDoForm @todo-added="addToDo"></ToDoForm>
+  <h2>{{ summary }}</h2>
+  <ul>
+    <li v-for="(item, index) in toDoItems" :key="item.id">
+      <ToDoItem
+        v-model="toDoItems[index]"
+        @item-deleted="deleteToDo(item.id)"
+      ></ToDoItem>
+    </li>
+  </ul>
+</template>
 
 <style>
 #app {

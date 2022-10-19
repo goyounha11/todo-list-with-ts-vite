@@ -1,13 +1,13 @@
 <template>
   <div v-if="!isEditing">
     <input
-      :id="modelValue.id"
-      :checked="modelValue.done"
+      :id="modelValue?.id"
+      :checked="modelValue?.done"
       type="checkbox"
       @change="changeDone"
     />
-    <label :for="modelValue.id"
-      >{{ modelValue.id }} : {{ modelValue.label }}</label
+    <label :for="modelValue?.id"
+      >{{ modelValue?.id }} : {{ modelValue?.label }}</label
     >
     <br />
     <button type="button" @click="editToDoItem">edit</button>
@@ -15,8 +15,8 @@
   </div>
   <ToDoEditForm
     v-else
-    :id="modelValue.id"
-    :label="modelValue.label"
+    :id="modelValue?.id"
+    :label="modelValue?.label"
     @item-edited="itemEdited"
     @edit-cancelled="editCancelled"
   ></ToDoEditForm>
@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { defineEmits, defineProps, ref } from "vue";
 import ToDoEditForm from "@/components/ToDoEditForm.vue";
-import { toDoItem } from "@/type";
+import type { toDoItem } from "@/type";
 import { useVModel } from "@vueuse/core";
 
 const props = withDefaults(

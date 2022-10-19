@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { defineEmits, ref } from "vue";
 import { uniqueId } from "lodash-es";
-import { toDoItem } from "@/type";
+import type { toDoItem } from "@/type";
 
 const text = ref("");
 

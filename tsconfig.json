@@ -24,8 +24,6 @@
     "composite": true,
     "sourceMap": true,
     "baseUrl": ".",
-    // For `<script setup>`
-    // See <https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/#preserve-value-imports>
     "preserveValueImports": true,
     "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
@@ -39,6 +37,6 @@
   "vueCompilerOptions": {
     "target": 2.7
   },
-  "include": ["src"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts"],
   "exclude": ["**/node_modules", "**/.*/"]
 }
