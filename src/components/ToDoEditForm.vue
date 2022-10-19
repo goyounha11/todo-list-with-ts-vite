@@ -18,16 +18,13 @@
 <script lang="ts" setup>
 import { defineEmits, defineProps, ref } from "vue";
 
-const props = defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  id: {
-    type: String,
-    required: true,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    label: string;
+    id: string;
+  }>(),
+  { label: "", id: "" },
+);
 
 const newLabel = ref("");
 

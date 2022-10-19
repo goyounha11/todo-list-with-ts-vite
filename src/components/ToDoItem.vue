@@ -1,13 +1,13 @@
 <template>
   <div v-if="!isEditing">
     <input
-      :id="syncedModelValue.id"
-      :checked="syncedModelValue.done"
+      :id="modelValue.id"
+      :checked="modelValue.done"
       type="checkbox"
       @change="changeDone"
     />
-    <label :for="syncedModelValue.id"
-      >{{ syncedModelValue.id }} : {{ syncedModelValue.label }}</label
+    <label :for="modelValue.id"
+      >{{ modelValue.id }} : {{ modelValue.label }}</label
     >
     <br />
     <button type="button" @click="editToDoItem">edit</button>
@@ -15,24 +15,25 @@
   </div>
   <ToDoEditForm
     v-else
-    :id="syncedModelValue.id"
-    :label="syncedModelValue.label"
+    :id="modelValue.id"
+    :label="modelValue.label"
     @item-edited="itemEdited"
     @edit-cancelled="editCancelled"
   ></ToDoEditForm>
 </template>
 
 <script lang="ts" setup>
-import { computed, defineEmits, defineProps, PropType, ref } from "vue";
+import { defineEmits, defineProps, ref } from "vue";
 import ToDoEditForm from "@/components/ToDoEditForm.vue";
 import { toDoItem } from "@/type";
+import { useVModel } from "@vueuse/core";
 
-const props = defineProps({
-  modelValue: {
-    type: Object as PropType<toDoItem>,
-    required: true,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    modelValue: toDoItem;
+  }>(),
+  { modelValue: undefined },
+);
 
 const isEditing = ref(false);
 
@@ -41,17 +42,19 @@ const emits = defineEmits<{
   (e: "item-deleted"): void;
 }>();
 
+const data = useVModel(props, "modelValue", emits);
+
 const changeDone = (): void => {
-  syncedModelValue.value = {
-    ...syncedModelValue.value,
-    done: !syncedModelValue.value.done,
+  data.value = {
+    ...data.value,
+    done: !data.value.done,
   };
 };
 const editToDoItem = (): void => {
   isEditing.value = true;
 };
 const itemEdited = (newLabel: string): void => {
-  syncedModelValue.value = { ...syncedModelValue.value, label: newLabel };
+  data.value = { ...data.value, label: newLabel };
   isEditing.value = false;
 };
 const editCancelled = (): void => {
@@ -60,15 +63,6 @@ const editCancelled = (): void => {
 const deleteToDoItem = (): void => {
   emits("item-deleted");
 };
-
-const syncedModelValue = computed({
-  get(): toDoItem {
-    return props.modelValue;
-  },
-  set(value: toDoItem): void {
-    emits("update:modelValue", value);
-  },
-});
 </script>
 
 <style scoped></style>
