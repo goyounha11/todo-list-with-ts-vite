@@ -6,8 +6,9 @@
     <button type="button" @click="editToDoItem">edit</button>
     <button type="button" @click="deleteToDoItem">delete</button>
   </div>
-  <ToDoEditForm v-else :id="syncedModelValue.id" :label="syncedModelValue.label" @item-edited="itemEdited"
-                   @edit-cancelled="editCancelled"></ToDoEditForm>
+  <ToDoEditForm
+      v-else :id="syncedModelValue.id" :label="syncedModelValue.label" @item-edited="itemEdited"
+      @edit-cancelled="editCancelled"></ToDoEditForm>
 </template>
 
 <script lang="ts" setup>
@@ -20,39 +21,40 @@ const props = defineProps({
     type: Object as PropType<toDoItem>,
     required: true
   }
-})
+});
 
-let isEditing = ref<boolean>(false);
+const isEditing = ref(false);
 
-const emit = defineEmits([
-  'update:modelValue', 'item-deleted'
-])
+const emits = defineEmits<{
+  (e: "update:modelValue", item: toDoItem): void;
+  (e: "item-deleted"): void;
+}>();
 
 const changeDone = (): void => {
-  syncedModelValue.value = {...syncedModelValue.value, done: !syncedModelValue.value.done}
-}
+  syncedModelValue.value = {...syncedModelValue.value, done: !syncedModelValue.value.done};
+};
 const editToDoItem = (): void => {
-  isEditing.value = true
-}
+  isEditing.value = true;
+};
 const itemEdited = (newLabel: string): void => {
-  syncedModelValue.value = {...syncedModelValue.value, label: newLabel}
-  isEditing.value = false
-}
+  syncedModelValue.value = {...syncedModelValue.value, label: newLabel};
+  isEditing.value = false;
+};
 const editCancelled = (): void => {
-  isEditing.value = false
-}
+  isEditing.value = false;
+};
 const deleteToDoItem = (): void => {
-  emit('item-deleted')
-}
+  emits("item-deleted");
+};
 
-let syncedModelValue = computed({
+const syncedModelValue = computed({
   get(): toDoItem {
-    return props.modelValue
+    return props.modelValue;
   },
   set(value: toDoItem): void {
-    emit('update:modelValue', value);
+    emits("update:modelValue", value);
   }
-})
+});
 </script>
 
 <style scoped>

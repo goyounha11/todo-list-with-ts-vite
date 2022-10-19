@@ -16,20 +16,20 @@ import ToDoItem from "@/components/ToDoItem.vue";
 import ToDoForm from "@/components/ToDoForm.vue";
 import {toDoItem} from "@/type";
 
-const toDoItems = ref<Array<toDoItem>>([])
+const toDoItems = ref<Array<toDoItem>>([]);
 
 const addToDo = (newItem: toDoItem): void => {
   toDoItems.value = [...toDoItems.value, newItem];
-}
+};
 const deleteToDo = (id: string): void => {
   toDoItems.value = toDoItems.value.filter((item: toDoItem) => item.id !== id);
-}
+};
 
 const summary = computed((): string => {
-  const countDoneStatus = toDoItems.value.filter((item: toDoItem) => item.done).length
+  const countDoneStatus = toDoItems.value.filter((item: toDoItem) => item.done).length;
 
   return `${toDoItems.value.length}개 중 ${countDoneStatus}개 완료!`;
-})
+});
 
 </script>
 

@@ -13,24 +13,31 @@
 import {defineEmits, defineProps, ref} from "vue";
 
 const props = defineProps({
-  label: String,
-  id: String
+  label: {
+    type: String,
+    required: true
+  },
+  id: {
+    type: String,
+    required: true
+  }
 });
 
-const newLabel = ref<string>('')
+const newLabel = ref("");
 
-const emit = defineEmits([
-    'item-edited', 'edit-cancelled'
-]);
+const emits = defineEmits<{
+  (e: "item-edited", item: string): void;
+  (e: "edit-cancelled"): void;
+}>();
 
 const onSubmit = (): void => {
   if(newLabel.value && newLabel.value !== props.label) {
-    emit('item-edited', newLabel.value);
+    emits("item-edited", newLabel.value);
   }
-}
+};
 const onCancel = (): void => {
-  emit('edit-cancelled')
-}
+  emits("edit-cancelled");
+};
 </script>
 
 <style scoped>

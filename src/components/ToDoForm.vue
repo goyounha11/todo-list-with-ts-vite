@@ -9,26 +9,28 @@
 <script lang="ts" setup>
 import {defineEmits, ref} from "vue";
 import {uniqueId} from "lodash-es";
+import {toDoItem} from "@/type";
 
-const text = ref<string>('')
+const text = ref("");
 
-const emit = defineEmits([
-  'todo-added'
-])
+const emits = defineEmits<{
+  (e: "todo-added" , item: toDoItem): void
+}>();
+
 
 const onSubmit = (): void => {
-  if(text.value === ''){
-    return
+  if(text.value === ""){
+    return;
   }
 
-  emit('todo-added', {
-    id : uniqueId('to-do'),
+  emits("todo-added", {
+    id : uniqueId("to-do"),
     label: text.value,
     done: false
-  })
+  });
 
-  text.value = ''
-}
+  text.value = "";
+};
 </script>
 
 <style scoped>
