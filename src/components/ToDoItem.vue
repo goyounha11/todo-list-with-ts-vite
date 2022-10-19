@@ -30,9 +30,9 @@ import { useVModel } from "@vueuse/core";
 
 const props = withDefaults(
   defineProps<{
-    modelValue: toDoItem;
+    modelValue: toDoItem | null;
   }>(),
-  { modelValue: undefined },
+  { modelValue: null },
 );
 
 const isEditing = ref(false);
@@ -42,19 +42,25 @@ const emits = defineEmits<{
   (e: "item-deleted"): void;
 }>();
 
-const data = useVModel(props, "modelValue", emits);
+const modelValue = useVModel(props, "modelValue", emits);
 
 const changeDone = (): void => {
-  data.value = {
-    ...data.value,
-    done: !data.value.done,
+  if (!modelValue.value) {
+    return;
+  }
+  modelValue.value = {
+    ...modelValue.value,
+    done: !modelValue.value.done,
   };
 };
 const editToDoItem = (): void => {
   isEditing.value = true;
 };
 const itemEdited = (newLabel: string): void => {
-  data.value = { ...data.value, label: newLabel };
+  if (!modelValue.value) {
+    return;
+  }
+  modelValue.value = { ...modelValue.value, label: newLabel };
   isEditing.value = false;
 };
 const editCancelled = (): void => {
