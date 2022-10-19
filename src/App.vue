@@ -1,20 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <img alt="Vue logo" src="./assets/logo.png" />
   <h1>To-Do-List</h1>
   <ToDoForm @todo-added="addToDo"></ToDoForm>
   <h2>{{ summary }}</h2>
   <ul>
     <li v-for="(item, index) in toDoItems" :key="item.id">
-      <ToDoItem v-model="toDoItems[index]" @item-deleted="deleteToDo(item.id)"></ToDoItem>
+      <ToDoItem
+        v-model="toDoItems[index]"
+        @item-deleted="deleteToDo(item.id)"
+      ></ToDoItem>
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from "vue";
+import { computed, ref } from "vue";
 import ToDoItem from "@/components/ToDoItem.vue";
 import ToDoForm from "@/components/ToDoForm.vue";
-import {toDoItem} from "@/type";
+import { toDoItem } from "@/type";
 
 const toDoItems = ref<Array<toDoItem>>([]);
 
@@ -26,11 +29,12 @@ const deleteToDo = (id: string): void => {
 };
 
 const summary = computed((): string => {
-  const countDoneStatus = toDoItems.value.filter((item: toDoItem) => item.done).length;
+  const countDoneStatus = toDoItems.value.filter(
+    (item: toDoItem) => item.done,
+  ).length;
 
   return `${toDoItems.value.length}개 중 ${countDoneStatus}개 완료!`;
 });
-
 </script>
 
 <style>

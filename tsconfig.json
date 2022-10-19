@@ -29,7 +29,7 @@
     "preserveValueImports": true,
     "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
-    "types": ["vuetify", "vite/client"],
+    "types": ["vite/client"],
     "paths": {
       "@/*": ["src/*"]
     },
