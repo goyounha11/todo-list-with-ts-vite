@@ -1,48 +1,39 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <img alt="Vue logo" src="./assets/logo.png" />
   <h1>To-Do-List</h1>
-  <to-do-form @todo-added="addToDo"></to-do-form>
-  <h2>{{summary}}</h2>
+  <ToDoForm @todo-added="addToDo"></ToDoForm>
+  <h2>{{ summary }}</h2>
   <ul>
     <li v-for="(item, index) in toDoItems" :key="item.id">
-      <to-do-item v-model="toDoItems[index]" @item-deleted="deleteToDo(item.id)"></to-do-item>
+      <ToDoItem
+        v-model="toDoItems[index]"
+        @item-deleted="deleteToDo(item.id)"
+      ></ToDoItem>
     </li>
   </ul>
 </template>
 
-<script lang="ts">
-import {defineComponent} from "vue";
+<script lang="ts" setup>
+import { computed, ref } from "vue";
 import ToDoItem from "@/components/ToDoItem.vue";
 import ToDoForm from "@/components/ToDoForm.vue";
-import {toDoItem} from "@/type";
+import { toDoItem } from "@/type";
 
+const toDoItems = ref<Array<toDoItem>>([]);
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    ToDoItem,
-    ToDoForm,
-  },
-  methods: {
-    addToDo(newItem: toDoItem): void {
-      this.toDoItems = [...this.toDoItems, newItem];
-    },
-    deleteToDo(id: string): void {
-      this.toDoItems = this.toDoItems.filter((item: toDoItem) => item.id !== id);
-    }
-  },
-  data() {
-    return {
-      toDoItems: [] as Array<toDoItem>
-    };
-  },
-  computed: {
-    summary(): string {
-      const countDoneStatus = this.toDoItems.filter((item:toDoItem) => item.done).length
+const addToDo = (newItem: toDoItem): void => {
+  toDoItems.value = [...toDoItems.value, newItem];
+};
+const deleteToDo = (id: string): void => {
+  toDoItems.value = toDoItems.value.filter((item: toDoItem) => item.id !== id);
+};
 
-      return `${this.toDoItems.length}개 중 ${countDoneStatus}개 완료!`;
-    }
-  }
+const summary = computed((): string => {
+  const countDoneStatus = toDoItems.value.filter(
+    (item: toDoItem) => item.done,
+  ).length;
+
+  return `${toDoItems.value.length}개 중 ${countDoneStatus}개 완료!`;
 });
 </script>
 

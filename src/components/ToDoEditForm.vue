@@ -1,47 +1,46 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div>
-      <label :for="id">Edit Name for {{label}}</label><br>
-      <input :id="id" v-model.lazy.trim="newLabel" autocomplete="off" type="text">
+      <label :for="id">Edit Name for {{ label }}</label
+      ><br />
+      <input
+        :id="id"
+        v-model.lazy.trim="newLabel"
+        autocomplete="off"
+        type="text"
+      />
       <button type="submit">save</button>
       <button type="button" @click="onCancel">cancel</button>
     </div>
   </form>
 </template>
 
-<script lang="ts">
-import {defineComponent} from "vue";
+<script lang="ts" setup>
+import { defineEmits, defineProps, ref } from "vue";
 
-export default defineComponent({
-  name: "ToDoEditForm",
-  props: {
-    label: {
-      type: String,
-      required: true,
-    },
-    id: {
-      type: String,
-      required: true,
-    }
-  },
-  methods: {
-    onSubmit(): void {
-      if(this.newLabel && this.newLabel !== this.label) {
-        this.$emit("item-edited", this.newLabel);
-      }
-    },
-    onCancel(): void {
-      this.$emit("edit-cancelled");
-    }
-  },
-  data() {
-    return {
-      newLabel: this.label,
-    };
+const props = withDefaults(
+  defineProps<{
+    label: string;
+    id: string;
+  }>(),
+  { label: "", id: "" },
+);
+
+const newLabel = ref("");
+
+const emits = defineEmits<{
+  (e: "item-edited", item: string): void;
+  (e: "edit-cancelled"): void;
+}>();
+
+const onSubmit = (): void => {
+  if (newLabel.value && newLabel.value !== props.label) {
+    emits("item-edited", newLabel.value);
   }
-});
+};
+const onCancel = (): void => {
+  emits("edit-cancelled");
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
