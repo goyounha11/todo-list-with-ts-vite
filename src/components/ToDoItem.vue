@@ -25,15 +25,12 @@
 <script lang="ts" setup>
 import { defineEmits, defineProps, ref } from "vue";
 import ToDoEditForm from "@/components/ToDoEditForm.vue";
-import { toDoItem } from "@/type";
-import { useVModel } from "@vueuse/core";
+import type { toDoItem } from "@/type";
+import { useVModels } from "@vueuse/core";
 
-const props = withDefaults(
-  defineProps<{
-    modelValue: toDoItem | null;
-  }>(),
-  { modelValue: null },
-);
+const props = defineProps<{
+  modelValue: toDoItem;
+}>();
 
 const isEditing = ref(false);
 
@@ -42,7 +39,7 @@ const emits = defineEmits<{
   (e: "item-deleted"): void;
 }>();
 
-const modelValue = useVModel(props, "modelValue", emits);
+const { modelValue } = useVModels(props, emits);
 
 const changeDone = (): void => {
   if (!modelValue.value) {
