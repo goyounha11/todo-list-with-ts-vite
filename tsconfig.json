@@ -1,42 +1,95 @@
+// 디렉토리에 tsconfig.json파일이 있다면 그 디렉토리가 root 디렉토리가 된다.
 {
+  // 파일들을 처리하는 설정
   "compilerOptions": {
+    // target을 통해서 tsc가 최종적으로 컴파일하는 결과물의 문법 형태를 결정함
+    // 만약 ES5라면 () => {} 같은 화살표 함수는 모두 function으로 변환
     "target": "ESNext",
+    // 컴파일된 결과물이 사용하게 될 module 방식
     "module": "ESNext",
+    // true로 지정하는 typescript의 type 검사 옵션 중 strice* 관련된 모든 것을 true로 지정
     "strict": true,
+    //자바스크립트 "use strict" 모드 켜기
     "alwaysStrict": true,
+    // js파일도 ts, tsx파일과 같은 형태로 사용할 수 있도록 한다.
     "allowJs": false,
+    //null, undefined 타입에 이상한 짓 할시 에러내기
     "strictNullChecks": true,
+    // tsx 파일을 jsx로 어떻게 컴파일할 것인지 'preserve', 'react-native', 'react', 'react-jsx', 'react-jsxdev'
     "jsx": "preserve",
+    // tslib에서 helpers (e.g. __extends, __rest, etc..)를 가져온다.
     "importHelpers": true,
+    // 모듈 해결 전략을 설정하는 것인데 'node'가 node.js의 node_modules에서 모듈을 가지고오는 것이아니고 node.js가 사용하는 방식으로 모듈을 찾는다라는 뜻
     "moduleResolution": "node",
+    // TC39 표준화 프로세스의 2단계인 데코레이터에 대한 실험적 지원을 가능하게 한다
     "experimentalDecorators": false,
+    // tsc에게 .d.ts 파일의 타입 검사를 생략한다.
     "skipLibCheck": true,
+    /**
+    * CommonJs
+    * import * as moment from "moment";
+    * moment();
+    * CommonJs 로 작성된 moment는 import moment from "moment"로 import할 수 없어 위와 같이 작성해야한다.
+    * 이러한 문제의 불편함을 해소하기 위해서 true로 설정하면 typescript가 두방식의 차이를 자동으로 해소해준다.
+    */
     "esModuleInterop": true,
+    // import React from "react"; 이런식으로 사용할 수 있게한다
     "allowSyntheticDefaultImports": true,
+    // json 형태의 파일을 사용할 수 있도록 한다
     "resolveJsonModule": true,
+    //쓰지않는 지역변수 있으면 에러내기
     "noUnusedLocals": true,
+    //쓰지않는 파라미터 있으면 에러내기
     "noUnusedParameters": true,
+    // true로 지정하면 프로젝트 내에 모든 각각의 소스코드 파일을 모듈로 만들기를 강제한다.
+    // 소스코드에서 import 또는 export를 사용하면 그 파일은 모듈이 된다.
+    // import, export가 없다면 전역공간으로 정의 되는데 isolatedModules를 true로 주면 에러로 간주한다.
     "isolatedModules": true,
+    // const enum형 선언을 지우지 않을건지 여부
     "preserveConstEnums": true,
+    //함수에서 return 빼먹으면 에러내기 여부
     "noImplicitReturns": false,
+    //any타입 금지 여부
     "noImplicitAny": false,
+    //컴파일시 주석제거
     "removeComments": true,
+    // 이제 tsc로 a를 빌드하면 알아서 의존 관계에 따라 먼저 b,c를 트랜스파일하고 a를 트랜스파일 해준다. 다음 번에 빌드를 하더라도 새로 빌드가 필요한 부분만 다시 빌드해줘서 불필요하게 모든 프로젝트가 다시 빌드되지 않게 해준다.
     "composite": true,
+    // true로 하면 출력물에 .js.map이나 .jsx.map파일을 포함한다.
+    // .js파일 내부에 source map이 포함되는 inlineSourceMap 속성과 함께 사용할 수 없다.
     "sourceMap": true,
+    // 외부모듈이 아닌 이상 상대경로로 모듈을 참조해야하는데 baseUrl은 외부모듈이 아닌 모듈들을 절대경로로 참조할 수 있게 한다.
     "baseUrl": ".",
+    // 추적할수 없는 import 모듈에 대한 처리..
     "preserveValueImports": true,
+    // 사용하지 않는 import문 제어 remove, preserve, error
     "importsNotUsedAsValues": "error",
+    // 파일명에 대소문자 구분하지 않아도 되는 기능 사용 여부
     "forceConsistentCasingInFileNames": true,
+    // types를 사용하면 node_modules/@types 내의 특정 모듈만 사용.
     "types": ["vite/client"],
+    // 모듈 참조를 baseUrl을 기준으로 다시 매핑시킨다
+    // ../../../example1 >> @/example1
     "paths": {
       "@/*": ["src/*"]
     },
+    // 현재 프로젝트에서 사용할 수 있는 특정 기능에 대한 문법 추가
+    // 주의점은 typescript가 그런 문법과 기능이 있다는 것을 알려주는 것이지 runtime이 해당기능을 추가해주는 것이 아니다
     "lib": ["ESNext", "DOM"],
+    // 에러 메시지를 예쁘게 설정
     "pretty": true
   },
+  // vue 2.7을 기준으로 컴파일한다?
   "vueCompilerOptions": {
     "target": 2.7
   },
+  // include를 통해서 pattern 형태로 원하는 파일 목록을 지정할 수 있다.
+  // * : 없거나 하나 이상의 문자열과 일치(디렉토리 구분자 제외)
+  // **/ : 단계에 관계없이 아무 디렉토리와 일치
+  // ? : 하나의 문자와 일치(디렉토리 구분자 제외)
   "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts"],
+
+  // exclude로 include에 지정한 파일이나 패턴을 제외시킬 수 있다.
+  // 주의할 점은 include에 지정하지 않은 파일은 적용되지 않는다.
   "exclude": ["**/node_modules", "**/.*/"]
 }
