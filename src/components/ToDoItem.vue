@@ -26,7 +26,7 @@
 import { defineEmits, defineProps, ref } from "vue";
 import ToDoEditForm from "@/components/ToDoEditForm.vue";
 import type { toDoItem } from "@/type";
-import { useVModel } from "@vueuse/core";
+import { useVModels } from "@vueuse/core";
 
 const props = defineProps<{
   modelValue: toDoItem;
@@ -39,7 +39,7 @@ const emits = defineEmits<{
   (e: "item-deleted"): void;
 }>();
 
-const modelValue = useVModel(props, "modelValue", emits);
+const { modelValue } = useVModels(props, emits);
 
 const changeDone = (): void => {
   if (!modelValue.value) {
